@@ -1,0 +1,3 @@
+[B]Version 0.1[/B]
+
+- initial revision with streaming support for live and archived games.
