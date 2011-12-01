@@ -21,9 +21,7 @@ from LeafsTV import LeafsTV, LeafsTVError
 from time import strftime
 from xbmc import Player
 
-#__settings__ = xbmcaddon.Addon(id='plugin.video.LeafsTV')
-#__language__ = __settings__.getLocalizedString
-__settings__ = xbmcaddon.Addon(id='plugin.video.LeafsTV')
+__settings__ = xbmcaddon.Addon(id='plugin.video.leafstv')
 __language__ = __settings__.getLocalizedString
 
 team_images = {"CHI" : "http://1.cdn.nhle.com/blackhawks/images/logos/extralarge.png",
@@ -95,7 +93,7 @@ def authenticate():
     username = xbmcplugin.getSetting(int(sys.argv[1]),"username")
     if len(username) == 0:
         dialog = xbmcgui.Dialog()
-        dialog.ok(__language__(30000), "Please add your user name to the settings")
+        dialog.ok(__language__(30000), __language__(30001))
         xbmcplugin.endOfDirectory(handle = int(sys.argv[1]),
                                   succeeded=False)
         return None
@@ -104,7 +102,7 @@ def authenticate():
     password = xbmcplugin.getSetting(int(sys.argv[1]),"password")
     if len(password) == 0:
         dialog = xbmcgui.Dialog()
-        dialog.ok("Empty Password", "Please add your password to the settings")
+        dialog.ok(__language__(30002), __language__(30003))
         xbmcplugin.endOfDirectory(handle = int(sys.argv[1]),
                                   succeeded=False)
         return None
@@ -113,13 +111,28 @@ def authenticate():
     ltv = LeafsTV(username, password)
     if not ltv.authenticate():
         dialog = xbmcgui.Dialog()
-        dialog.ok("Authentication Error",
-                  "Unable to authenticate with Leafs TV Interactive")
+        dialog.ok(__language__(30004),__language__(30005))
         xbmcplugin.endOfDirectory(handle=int(sys.argv[1]),
                                   succeeded=False)
         return None
     
     return ltv
+
+
+def getGamesList(ltv):
+    """
+    Get the games list from leafs tv interactive using a LeafsTV object that is
+    already authenticated
+    """
+    try:
+        games_list = ltv.getGames()
+    except LeafsTVError, ltvErr:
+        dialog = xbmcgui.Dialog()
+        dialog.ok(__language__(30007), __language__(30006))
+        xbmcplugin.endOfDirectory(handle=int(sys.argv[1]), succeeded=False)
+        return None
+
+    return games_list
 
 
 def createLiveMenu():
@@ -133,13 +146,9 @@ def createLiveMenu():
         xbmcplugin.endOfDirectory(handle=int(sys.argv[1]), succeeded=False)
         return
 
-    # attempt to get the list of games
-    try:
-        games_list = ltv.getGames()
-    except LeafsTVError, ltvErr:
-        dialog = xmbcgui.Dialog()
-        dialog.ok("Unable to get games list", str(ltvErr))
-        xbmcplugin.endOfDirectory(handle=int(sys.argv[1]), succeeded=False)
+    # get the games list
+    games_list = getGamesList(ltv)
+    if games_list == None:
         return
 
     # find any live games (there will only be one) and add them to the menu
@@ -163,12 +172,9 @@ def createArchivedMenu():
         return
 
     # get the list of games
-    try:
-        games_list = ltv.getGames()
-    except LeafsTVError, ltvErr:
-        dialog = xmbcgui.Dialog()
-        dialog.ok("Unable to get games list", str(ltvErr))
-        xbmcplugin.endOfDirectory(handle=int(sys.argv[1]), succeeded=False)
+    # get the games list
+    games_list = getGamesList(ltv)
+    if games_list == None:
         return
 
     # add any game that has already happened or is not live
@@ -219,7 +225,7 @@ def addLiveGame(game, ltv):
         game_url = ltv.getLiveGame()
     except LeafsTVError, ltvErr:
         dialog = xbmcgui.Dialog()
-        dialog.ok("Live Game Error", str(ltvErr))
+        dialog.ok(__language__(30009), __language__(30006))
         xbmcplugin.endOfDirectory(handle=int(sys.argv[1]), succeeded=False)
         return
     
@@ -259,8 +265,7 @@ def playArchive(game_id):
         url = ltv.getArchivedGame(game_id)
     except LeafsTVError, ltvErr:
         dialog = xbmcgui.Dialog()
-        dialog.ok("Archive Error",
-                  "Unable to get game URI")
+        dialog.ok(__language__(30008),__language__(30010))
         return
 
     # play the archived game
@@ -286,8 +291,8 @@ else:
             playArchive(game_id)
         except:
             dialog = xbmcgui.Dialog()
-            dialog.ok("Archive Error", "No game ID specified")
+            dialog.ok(__language__(30008), __language__(30011))
     else:
         dialog = xbmcgui.Dialog()
-        dialog.ok("Archive Error", "Unable to parse returned archive")
+        dialog.ok(__language__(30008), __language__(30012))
     
