@@ -14,7 +14,7 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 '''
 
-import urllib, urllib2, re, time
+import urllib, urllib2, re, time, logging
 
 class LeafsTVError(Exception):
     def __init__(self, value):
@@ -76,13 +76,15 @@ class LeafsTV:
         req = urllib2.Request("http://leafstv.neulion.com/leafstv/servlets/games")
         req.add_header('cookie', self.cookie)
         
-        # make the request and read the response
+    	# make the request and read the response
         try:
             resp = urllib2.urlopen(req)
         except urllib2.URLError, ue:
-            raise LeafsTVError("URL error trying to open games list: " + ue.read())
+            logging.error("URL error trying to open games list: %s" % ue.read())
+            raise LeafsTVError("URL error trying to open games list")
         except urllib2.HTTPError, he:
-            raise LeafsTVError("HTTP error trying to open games list: " + he.read())
+            logging.error("HTTP error trying to open games list: %s" % he.read())
+            raise LeafsTVError("HTTP error trying to open games list")
         
         return self.parseGamesList(resp.read())
     
@@ -210,19 +212,23 @@ class LeafsTV:
         try:
             resp = urllib2.urlopen(req)
         except urllib2.URLError, ue:
-            raise LeafsTVError("URL error trying to open game: " + ue.read())
+            logging.error("URL error trying to open game: %s" % ue.read())
+            raise LeafsTVError("URL error trying to open game")
         except urllib2.HTTPError, he:
-            raise LeafsTVError("HTTP error trying to open game: " + he.read())
+            logging.error("HTTP error trying to open game: %s" % he.read())
+            raise LeafsTVError("HTTP error trying to open game")
 
         # try to pull the program id
         match = re.search('<programId>(.*?)</programId>', resp.read())
         if match == None:
+            logging.error("Unable to find programId")
             raise LeafsTVError("Unable to find programId")
 
         # ensure a valid program id exists
         try:
             program_id = match.group(1)
         except IndexError:
+            logging.error("Invalid program ID")
             raise LeafsTVError("Invalid program ID")
         
         # by default use the 1600 bitrate... poor, I know, but that is the best
@@ -249,17 +255,21 @@ class LeafsTV:
         try:
             resp = urllib2.urlopen(req)
         except urllib2.URLError, ue:
-            raise LeafsTVError("URL error trying to open game: " + ue.read())
+            logging.error("URL error trying to open game: %s" % ue.read())
+            raise LeafsTVError("URL error trying to open game")
         except urllib2.HTTPError, he:
-            raise LeafsTVError("HTTP error trying to open game: " + he.read())
+            logging.error("HTTP error trying to open game: %s" % he.read())
+            raise LeafsTVError("HTTP error trying to open game")
         
         match = re.search('<path><\!\[CDATA\[(.*?)\]\]></path>', resp.read())
         if match == None:
+            logging.error("Unable to match live game with <path/>")
             raise LeafsTVError("Unable to match live game with <path/>")
 
         try:
             url = match.group(1)
         except IndexError, ie:
+            logging.error("ERROR: Unable to get URL from live game")
             raise LeafsTVError("ERROR: Unable to get URL from live game")
 
         return url
@@ -287,15 +297,18 @@ class LeafsTV:
         try:
             resp = urllib2.urlopen(req)
         except urllib2.URLError, ue:
-            raise LeafsTVError("URL error trying to open archive: " + ue.read())
+            logging.error("URL error trying to open archive: %s" % ue.read())
+            raise LeafsTVError("URL error trying to open archive")
         except urllib2.HTTPError, he:
-            raise LeafsTVError("HTTP error trying to open archive: " + he.read())
+            logging.error("HTTP error trying to open archive: %s" % he.read())
+            raise LeafsTVError("HTTP error trying to open archive")
         
         match = re.search('<publishPoint><\!\[CDATA\[(.*?)\]\]></publishPoint>', resp.read())
         if match == None:
             
             # we have recursed down to preseason and that also did not work             
             if type == 1:
+                logging.error("All known game types attempted. Unable to play game")
                 raise LeafsTVError("All known game types attempted. Unable to play game")
 
             # use a lower game type. From what I can tell 2 means regular
@@ -312,6 +325,7 @@ class LeafsTV:
         try:
             url = match.group(1)
         except IndexError:
+            logging.error("ERROR: Unable to get URL from archived game")
             raise LeafsTVError("ERROR: Unable to get URL from archived game")
 
         # for whatever reason the url is modified in this way for the next request        
@@ -343,19 +357,23 @@ class LeafsTV:
         try:
             resp = urllib2.urlopen(req)
         except urllib2.URLError, ue:
-            raise LeafsTVError("URL error trying to open encrypted archive: " + ue.read())
+            logging.error("URL error trying to open encrypted archive: %s" % ue.read())
+            raise LeafsTVError("URL error trying to open encrypted archive")
         except urllib2.HTTPError, he:
-            raise LeafsTVError("HTTP error trying to open encrypted archive: " + he.read())
+            logging.error("HTTP error trying to open encrypted archive: %s" % he.read())
+            raise LeafsTVError("HTTP error trying to open encrypted archive")
 
         # try to match the path from the response
         match = re.search('<path><\!\[CDATA\[(.*?)\]\]></path>', resp.read())
         if match == None:
+            logging.error("Unable to match archive game with <path/>")
             raise LeafsTVError("Unable to match archive game with <path/>")
 
         # ensure a valid path was returned
         try:
             url = match.group(1)
         except IndexError, ie:
+            logging.error("ERROR: Unable to get URL from archived game")
             raise LeafsTVError("ERROR: Unable to get URL from archived game")
 
         return url
