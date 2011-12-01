@@ -2,8 +2,16 @@
 <strings>
   <!-- range of strings for plugins is 30000 to 30999 -->
   <string id="30000">Empty User Name</string>
-  <string id="30001">Full Episode</string>
-  <string id="30002">Episode Premiere</string>
-  <string id="30003">Clip</string>
-  <string id="30004"></string>
+  <string id="30001">Please add your user name to the settings</string>
+  <string id="30002">Empty Password</string>
+  <string id="30003">Please add your password to the settings</string>
+  <string id="30004">Authentication Error</string>
+  <string id="30005">Unable to authenticate with Leafs TV Interactive</string>
+  <string id="30006">Please contact the plugin author</string>
+  <string id="30007">Unable to get games list</string>
+  <string id="30008">Archive Error</string>
+  <string id="30009">Live Game Error</string>
+  <string id="30010">Unable to get game URI</string>
+  <string id="30011">No game ID specified</string>
+  <string id="30012">Unable to parse returned archive</string>
 </strings>
