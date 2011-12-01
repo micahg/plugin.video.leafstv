@@ -15,10 +15,16 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 '''
 
-import xbmcplugin, xbmcgui, urllib, logging, re, time
+import xbmcplugin, xbmcgui, xbmcaddon
+import urllib, re, time
 from LeafsTV import LeafsTV, LeafsTVError
 from time import strftime
 from xbmc import Player
+
+#__settings__ = xbmcaddon.Addon(id='plugin.video.LeafsTV')
+#__language__ = __settings__.getLocalizedString
+__settings__ = xbmcaddon.Addon(id='plugin.video.LeafsTV')
+__language__ = __settings__.getLocalizedString
 
 team_images = {"CHI" : "http://1.cdn.nhle.com/blackhawks/images/logos/extralarge.png",
                "CMB" : "http://1.cdn.nhle.com/bluejackets/images/logos/extralarge.png",
@@ -89,7 +95,7 @@ def authenticate():
     username = xbmcplugin.getSetting(int(sys.argv[1]),"username")
     if len(username) == 0:
         dialog = xbmcgui.Dialog()
-        dialog.ok("Empty User Name", "Please add your user name to the settings")
+        dialog.ok(__language__(30000), "Please add your user name to the settings")
         xbmcplugin.endOfDirectory(handle = int(sys.argv[1]),
                                   succeeded=False)
         return None
@@ -103,7 +109,7 @@ def authenticate():
                                   succeeded=False)
         return None
 
-    # attempt to authenticate    
+    # attempt to authenticate
     ltv = LeafsTV(username, password)
     if not ltv.authenticate():
         dialog = xbmcgui.Dialog()
