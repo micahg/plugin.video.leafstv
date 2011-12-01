@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<strings>
+  <!-- range of strings for plugins is 30000 to 30999 -->
+  <string id="30000">Empty User Name</string>
+  <string id="30001">Full Episode</string>
+  <string id="30002">Episode Premiere</string>
+  <string id="30003">Clip</string>
+  <string id="30004"></string>
+</strings>
