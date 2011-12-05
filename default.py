@@ -202,7 +202,6 @@ def createArchivedMenu():
         return
 
     # get the list of games
-    # get the games list
     games_list = getGamesList(ltv)
     if games_list == None:
         return
