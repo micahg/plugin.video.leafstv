@@ -8,7 +8,7 @@
   </extension>
   <extension point="xbmc.addon.metadata">
     <summary>LeafsTV Interactive XBMC plugin</summary>
-    <description>Stream content from LeafsTV Interactive. Live games are not reliable yet.</description>
+    <description>Stream content from LeafsTV Interactive.</description>
     <platform>all</platform>
     <disclaimer></disclaimer>
   </extension>
