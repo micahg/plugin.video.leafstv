@@ -120,7 +120,7 @@ def authenticate():
     Try to authenticate with leafs tv
     """
     # get the user name
-    username = xbmcplugin.getSetting(int(sys.argv[1]),"username")
+    username = __settings__.getSetting("username")
     if len(username) == 0:
         dialog = xbmcgui.Dialog()
         dialog.ok(__language__(30000), __language__(30001))
@@ -129,7 +129,7 @@ def authenticate():
         return None
 
     # get the password
-    password = xbmcplugin.getSetting(int(sys.argv[1]),"password")
+    password = __settings__.getSetting("password")
     if len(password) == 0:
         dialog = xbmcgui.Dialog()
         dialog.ok(__language__(30002), __language__(30003))
@@ -244,8 +244,7 @@ def addArchivedGame(game, ltv):
     li.setInfo( type="Video", infoLabels={"Title" : game_name})
     xbmcplugin.addDirectoryItem(handle=int(sys.argv[1]),
                                 url=sys.argv[0] + "?archive=" + urllib.quote_plus(game['id']),
-                                listitem=li,
-                                isFolder=True)
+                                listitem=li)
     
     return
 
