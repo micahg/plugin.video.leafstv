@@ -24,37 +24,67 @@ from xbmc import Player
 __settings__ = xbmcaddon.Addon(id='plugin.video.leafstv')
 __language__ = __settings__.getLocalizedString
 
-team_images = {"CHI" : "http://1.cdn.nhle.com/blackhawks/images/logos/extralarge.png",
-               "CMB" : "http://1.cdn.nhle.com/bluejackets/images/logos/extralarge.png",
-               "DET" : "http://1.cdn.nhle.com/redwings/images/logos/extralarge.png",
-               "NSH" : "http://1.cdn.nhle.com/predators/images/logos/extralarge.png",
-               "STL" : "http://1.cdn.nhle.com/blues/images/logos/extralarge.png",
-               "NJD" : "http://1.cdn.nhle.com/devils/images/logos/extralarge.png",
-               "NYI" : "http://1.cdn.nhle.com/islanders/images/logos/extralarge.png",
-               "NYR" : "http://1.cdn.nhle.com/rangers/images/logos/extralarge.png",
-               "PHI" : "http://1.cdn.nhle.com/flyers/images/logos/extralarge.png",
-               "PIT" : "http://1.cdn.nhle.com/penguins/images/logos/extralarge.png",
-               "CAL" : "http://1.cdn.nhle.com/flames/images/logos/extralarge.png",
-               "COL" : "http://1.cdn.nhle.com/avalanche/images/logos/extralarge.png",
-               "EDM" : "http://1.cdn.nhle.com/oilers/images/logos/extralarge.png",
-               "MIN" : "http://1.cdn.nhle.com/wild/images/logos/extralarge.png",
-               "VAN" : "http://1.cdn.nhle.com/canucks/images/logos/extralarge.png",
+team_images = {"ANA" : "http://1.cdn.nhle.com/ducks/images/logos/extralarge.png",
                "BOS" : "http://1.cdn.nhle.com/bruins/images/logos/extralarge.png",
                "BUF" : "http://1.cdn.nhle.com/sabres/images/logos/extralarge.png",
-               "MTL" : "http://1.cdn.nhle.com/canadiens/images/logos/extralarge.png",
-               "OTT" : "http://1.cdn.nhle.com/senators/images/logos/extralarge.png",
-               "TOR" : "http://1.cdn.nhle.com/mapleleafs/images/logos/extralarge.png",
-               "ANA" : "http://1.cdn.nhle.com/ducks/images/logos/extralarge.png",
-               "DAL" : "http://1.cdn.nhle.com/stars/images/logos/extralarge.png",
-               "LAK" : "http://1.cdn.nhle.com/kings/images/logos/extralarge.png",
-               "PHX" : "http://1.cdn.nhle.com/coyotes/images/logos/extralarge.png",
-               "SJS" : "http://1.cdn.nhle.com/sharks/images/logos/extralarge.png",
+               "CAL" : "http://1.cdn.nhle.com/flames/images/logos/extralarge.png",
                "CAR" : "http://1.cdn.nhle.com/hurricanes/images/logos/extralarge.png",
+               "CHI" : "http://1.cdn.nhle.com/blackhawks/images/logos/extralarge.png",
+               "CMB" : "http://1.cdn.nhle.com/bluejackets/images/logos/extralarge.png",
+               "COL" : "http://1.cdn.nhle.com/avalanche/images/logos/extralarge.png",
+               "DAL" : "http://1.cdn.nhle.com/stars/images/logos/extralarge.png",
+               "DET" : "http://1.cdn.nhle.com/redwings/images/logos/extralarge.png",
+               "EDM" : "http://1.cdn.nhle.com/oilers/images/logos/extralarge.png",
                "FLA" : "http://1.cdn.nhle.com/panthers/images/logos/extralarge.png",
+               "LAK" : "http://1.cdn.nhle.com/kings/images/logos/extralarge.png",
+               "MIN" : "http://1.cdn.nhle.com/wild/images/logos/extralarge.png",
+               "MTL" : "http://1.cdn.nhle.com/canadiens/images/logos/extralarge.png",
+               "NJD" : "http://1.cdn.nhle.com/devils/images/logos/extralarge.png",
+               "NSH" : "http://1.cdn.nhle.com/predators/images/logos/extralarge.png",
+               "NYI" : "http://1.cdn.nhle.com/islanders/images/logos/extralarge.png",
+               "NYR" : "http://1.cdn.nhle.com/rangers/images/logos/extralarge.png",
+               "OTT" : "http://1.cdn.nhle.com/senators/images/logos/extralarge.png",               
+               "PHI" : "http://1.cdn.nhle.com/flyers/images/logos/extralarge.png",
+               "PHX" : "http://1.cdn.nhle.com/coyotes/images/logos/extralarge.png",
+               "PIT" : "http://1.cdn.nhle.com/penguins/images/logos/extralarge.png",
+               "SJS" : "http://1.cdn.nhle.com/sharks/images/logos/extralarge.png",
+               "STL" : "http://1.cdn.nhle.com/blues/images/logos/extralarge.png",
                "TAM" : "http://1.cdn.nhle.com/lightning/images/logos/extralarge.png",
+               "TOR" : "http://1.cdn.nhle.com/mapleleafs/images/logos/extralarge.png",
+               "VAN" : "http://1.cdn.nhle.com/canucks/images/logos/extralarge.png",
                "WSH" : "http://1.cdn.nhle.com/capitals/images/logos/extralarge.png",
                "WPG" : "http://1.cdn.nhle.com/jets/images/logos/extralarge.png"}
 
+team_strings = {"ANA" : 30970,
+                "BOS" : 30971,
+                "BUF" : 30972,
+                "CAL" : 30973,
+                "CAR" : 30974,
+                "CHI" : 30975,
+                "CMB" : 30976,
+                "COL" : 30977,
+                "DAL" : 30978,
+                "DET" : 30979,
+                "EDM" : 30980,
+                "FLA" : 30981,
+                "LAK" : 30982,
+                "MIN" : 30983,
+                "MTL" : 30984,
+                "NJD" : 30985, 
+                "NSH" : 30986,
+                "NYI" : 30987,
+                "NYR" : 30988,
+                "OTT" : 30989,
+                "PHI" : 30990,
+                "PHX" : 30991,
+                "PIT" : 30992,
+                "SJS" : 30993,
+                "STL" : 30994,
+                "TAM" : 30995,
+                "TOR" : 30996,
+                "VAN" : 30997,
+                "WPG" : 30998,
+                "WSH" : 30999}
 
 ARCHIVED_GAMES = 'Archived Games'
 LIVE_GAME = 'Live Game'
@@ -191,7 +221,13 @@ def addArchivedGame(game, ltv):
     
     game_time=game['time']
     time_str = strftime("%d %b %Y", game_time)
-    game_name = time_str + " " + game['away_team'] + " at " + game['home_team']
+    
+    # get the away team string
+    away_team = __language__(team_strings[game['away_team']])
+    home_team = __language__(team_strings[game['home_team']])
+    
+    
+    game_name = time_str + " " + away_team + " " + __language__(30013) + " " + home_team
     
     # figure out the opposition
     opposition = game['home_team']
@@ -218,9 +254,12 @@ def addLiveGame(game, ltv):
     """
     Add the live game to the menu
     """
-    
-    game_name = "Live " + game['away_team'] + " at " + game['home_team']
-    
+
+    # get the away team string
+    away_team = __language__(team_strings[game['away_team']])
+    home_team = __language__(team_strings[game['home_team']])
+    game_name = __language__(30014) + " " + away_team + " " + __language__(30013) + " " + home_team
+        
     try:
         game_url = ltv.getLiveGame()
     except LeafsTVError, ltvErr:
