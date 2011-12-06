@@ -256,7 +256,7 @@ def addLiveGame(game, ltv):
     # get the away team string
     away_team = __language__(team_strings[game['away_team']])
     home_team = __language__(team_strings[game['home_team']])
-    game_name = __language__(30014) + " " + away_team + " " + __language__(30013) + " " + home_team
+    game_name = away_team + " " + __language__(30013) + " " + home_team
         
     try:
         game_url = ltv.getLiveGame()
