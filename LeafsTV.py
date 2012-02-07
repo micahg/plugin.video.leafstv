@@ -226,7 +226,7 @@ class LeafsTV:
             raise LeafsTVError("Program ID is none")
         
         # by default use the 1600 bitrate... poor, I know, but that is the best
-        full_id = program_id + "_1600"
+        full_id = program_id + "_3000"
         try:
             live_game = self.getEncryptedLiveGame(full_id)
         except LeafsTVError, ltvError:
@@ -400,3 +400,44 @@ class LeafsTV:
             raise LeafsTVError("ERROR: Unable to get URL from archived game")
 
         return url
+
+
+    def getLiveGameXML(self, uri):
+        """
+        Get the XML data describing the streams.
+        
+        @param uri The location returned from the encrypted video path
+        """
+        
+        # chop up the URI so we can call it with encrypt video path
+        match = re.search("(.*?)://(.*?)/(.*)", uri)
+        
+        if match == None:
+            print "Unable to match URI"
+            return None
+        
+        if len(match.groups()) != 3:
+            print "Imperfect match on URI"
+            return None
+        
+        # chop up the URI
+        xml_src = "http://" + match.group(2) + "/play?url=" + match.group(3)
+        
+        # create the request
+        req = urllib2.Request(xml_src)
+
+        # request the games        
+        try:
+            resp = urllib2.urlopen(req)
+        except urllib2.URLError, ue:
+            logging.error("URL error trying to open playlist: %s" % ue.read())
+            raise GameCenterError("URL error trying to open playlist")
+        except urllib2.HTTPError, he:
+            logging.error("HTTP error trying to open playlist: %s" % he.read())
+            raise GameCenterError("HTTP error trying to open playlist")
+
+        # get the xml
+        xml = resp.read()
+        
+        #return the xml
+        return xml
