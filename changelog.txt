@@ -1,3 +1,8 @@
+[B]Version 1.0.6[/B]
+
+- Mark plugin as broken. Due to a short season caused by a labour dispute it
+  appears the service will not be offered this year. 
+
 [B]Version 1.0.5[/B]
 
 - Parse response from the game request as XML (instead of a regular expession).
